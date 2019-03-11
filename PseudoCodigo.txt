@@ -1,0 +1,13 @@
+[PVP]
+1 ::  Checar los limites
+  Gold
+  Medals
+2 :: Click PVP Matching Button
+
+3 :: Banear Personajes (Crear una base de datos y prioridades) [Cerca] ==WEBSCRAPING==
+
+4 :: AutoBattle
+
+4.5 :: Usar PartySkill
+
+5 :: Salir
