@@ -58,11 +58,12 @@ pyautogui.hotkey('num1', 'subtract', 'num1', 'num1', 'num1', 'num1', 'enter')
 #pyautogui.hotkey('alt', '1')  #☺
 keyboard.write(prologue, delay=.1)
 """
+index = 0
+for y in range (0, 2):
+        for x in range(0, 4):         
+          #print('%(language)s has %(number)03d quote types.' % \
+          #  {'language': "Python", "number": 2})
+          #print('[%(x)02d, %(y)02d]' % {"x": x, "y": y})
+          index = index + 1
+          print('[%(index)03d]' % {"index": index})
 
-#Locate on Screen
-
-try:
-  print(pyautogui.locateOnScreen('goldLimit.PNG'))
-  #print(pyautogui.locateOnScreen('test.png'))
-except:
-  print("Item not Found")
