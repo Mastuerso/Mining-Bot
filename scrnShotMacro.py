@@ -1,6 +1,4 @@
 import pyautogui
-import keyboard
-import os
 
 iconW = 106
 iconH = 130

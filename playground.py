@@ -1,6 +1,8 @@
 import pyautogui
 import keyboard
 import time
+from PIL import Image
+import numpy
 
 #time.sleep(5) # 5 Seconds pause
 #mouseX, mouseY = pyautogui.position()
@@ -58,12 +60,33 @@ pyautogui.hotkey('num1', 'subtract', 'num1', 'num1', 'num1', 'num1', 'enter')
 #pyautogui.hotkey('alt', '1')  #☺
 keyboard.write(prologue, delay=.1)
 """
-index = 0
-for y in range (0, 2):
-        for x in range(0, 4):         
-          #print('%(language)s has %(number)03d quote types.' % \
-          #  {'language': "Python", "number": 2})
-          #print('[%(x)02d, %(y)02d]' % {"x": x, "y": y})
-          index = index + 1
-          print('[%(index)03d]' % {"index": index})
+#index = 0
+#for y in range (0, 3):
+  #print('%(language)s has %(number)03d quote types.' % \
+  #  {'language': "Python", "number": 2})
+  #print('[%(x)02d, %(y)02d]' % {"x": x, "y": y})
+  #index = index + 1
+  #print('[%(index)03d]' % {"index": index})
 
+"""
+charName = pyautogui.prompt(text='Name the Heroe', title='Hero\'s name' , default='--')
+if charName == '--':
+  print('Not a Hero')
+else:
+  print(charName + ' is a Hero')
+"""
+
+def cheeseshop(kind, *arguments, **keywords):
+    print("-- Do you have any", kind, "?")
+    print("-- I'm sorry, we're all out of", kind)
+    for arg in arguments:
+        print(arg)
+    print("-" * 40)
+    for kw in keywords:
+        print(kw, ":", keywords[kw])
+
+cheeseshop("Limburger", "It's very runny, sir.",
+           "It's really very, VERY runny, sir.",
+           shopkeeper="Michael Palin",
+           client="John Cleese",
+           sketch="Cheese Shop Sketch")

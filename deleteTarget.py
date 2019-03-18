@@ -12,7 +12,7 @@ def auditDir(directory, extension):
                 auditDir(content, extension)
             elif not content.name.startswith('.') and os.path.isfile(content):
                 #if file to erase -- erase it   
-                if content.name.endswith(extension) :
+                if content.name.endswith(extension):
                     print("DELETING..." + content.name)                    
                     os.remove(content)
                 else:

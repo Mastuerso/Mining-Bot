@@ -2,17 +2,6 @@ import pyautogui
 import os
 
 #Locate on Screen
-"""
-try:
-  pyautogui.locateOnScreen('goldLimit.PNG')
-except:
-  print("Item not Found")
-"""
-#os.name
-"""
-if os.access("PVP Data", os.R_OK):
-    print("Dir exist")
-"""
 #print(os.getcwd())
 #print(os.listdir())
 with os.scandir('PVP Data/Heroes') as heroes:
