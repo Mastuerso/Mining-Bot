@@ -1,8 +1,6 @@
 import pyautogui
 import os
 import sys
-sys.path.append("./")
-from appJar import gui
 
 def images(anchor, save = False):
     try:
@@ -14,7 +12,9 @@ def images(anchor, save = False):
     region_list = []
     if anchorBox:
         #print(anchorBox)
+        mouse_orogin = pyautogui.position()
         pyautogui.click(anchor)
+        pyautogui.moveTo(mouse_orogin)
         xo = anchorBox.left + 1284 - 586
         yo = anchorBox.top + anchorBox.height + 198
         xi, yi = (xo, yo)

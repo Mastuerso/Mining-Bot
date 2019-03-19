@@ -18,7 +18,7 @@ app = gui("Login Window", "400x300")
 #add & configuire widgets - widgets get a name, to help referencing them later
 app.addLabel("title", "Welcome to appJar")
 #
-photo = ImageTk.PhotoImage(Image.open("logoTest.gif"))
+photo = ImageTk.PhotoImage(Image.open("NoxLogo.PNG"))
 app.addImageData("pic", photo, fmt="PhotoImage")
 #Changing appearance
 app.setFont(12)
