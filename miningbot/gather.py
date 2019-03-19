@@ -1,13 +1,17 @@
 import pyautogui
 import os
+import sys
+sys.path.append("./")
+from appJar import gui
 
-def images(anchor):
+def images(anchor, save = False):
     try:
         anchorBox = pyautogui.locateOnScreen(anchor)
     except:
         anchorBox = False
     
     imgList = []
+    region_list = []
     if anchorBox:
         #print(anchorBox)
         pyautogui.click(anchor)
@@ -19,7 +23,8 @@ def images(anchor):
         iconH = 130
         xGap = 14
         yGap = 18
-        miniW, miniH = (92, 75)             
+        miniW, miniH = (92, 75)
+        count = 0             
         for y in range (0, 2):
             if y == 1:            
                 yi = yi + iconH + yGap   
@@ -42,10 +47,17 @@ def images(anchor):
                 imgX = xi + borderSide
                 imgY = yi + borderTop
                 imgList.append(pyautogui.screenshot(region=(imgX, imgY, miniW, miniH)))
+                img_region = (imgX, imgY, miniW, miniH)
+                region_list.append(img_region)
+                if save:                    
+                    file_name =  "%(count)03d.png" % {"count": count}
+                    print(file_name)
+                    imgList[count].save(file_name)
+                    count = count + 1
     else:
-        print("Void")
+        print("anchor image not found")
     
-    return imgList 
+    return imgList, region_list
 
 def list_items(directory, *arguments):
     result_list = []
