@@ -3,6 +3,7 @@ import keyboard
 import time
 from PIL import Image
 import numpy
+from miningbot import gather, db_gui
 
 #time.sleep(5) # 5 Seconds pause
 #mouseX, mouseY = pyautogui.position()
@@ -77,6 +78,7 @@ if charName == '--':
 else:
   print(charName + ' is a Hero')
 """
+"""
 
 def cheeseshop(kind, *arguments, **keywords):
     print("-- Do you have any", kind, "?")
@@ -93,5 +95,10 @@ cheeseshop("Limburger", "It's very runny, sir.",
            client="John Cleese",
            sketch="Cheese Shop Sketch")
 
+"""
 #im = pyautogui.screenshot()
 #im.save("test.png")
+
+
+dir_list = gather.list_items("PVP Data/Heroes")
+db_gui.populate_db(dir_list, "temp.png")

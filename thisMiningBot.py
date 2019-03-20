@@ -1,45 +1,5 @@
-from miningbot import gather
-from appJar import gui
-from PIL import Image, ImageTk
+from miningbot import gather, db_gui
 import os
-
-def storage(parent, child):   
-    if child == "Hidden":
-        #print("Adding Hidden Hero")
-        parenDir = os.path.commonpath(parent)
-        #print(parenDir)
-        hidden_hero = os.path.join(parenDir, "hidden_hero")
-        #print(noHero)
-        if not os.path.exists(hidden_hero):
-            #print("Dir doesn't exists")
-            os.makedirs(hidden_hero)
-        thumbPath = hidden_hero
-    else:
-        for target in parent:
-            if target.name == child:
-                #print(target)
-                thumbPath = target
-    # storage image in the selected path
-    print(thumbPath)   
-
-def press(button):
-    if button == "Ok":
-        selection = app.getListBox("Hero")
-        print("Adding " + selection[0] + " data")
-        storage(dir_list, selection[0])
-    elif button == "Hidden":        
-        storage(dir_list, "Hidden")
-        print("Hidden")
-    elif button == "New":        
-        #new gui to ask Name of Character        
-        print("----------------New")
-        app.showSubWindow("Add_Hero")       
-    app.stop()
-
-def add_new_char():
-    selection = app.getEntry("new_Hero")
-    print(selection)
-    app.stop()
 
 # Take regional screenshots
 thumbs, region_list = gather.images("NoxLogo.PNG")
@@ -74,20 +34,15 @@ if len(thumbs) > 0:
             characters_names.append(character.name)
         
         for new_entry in new_entries:
-            with gui("Select Hero") as app:
-                new_entry.save("temp.png")
-                photo = ImageTk.PhotoImage(Image.open("temp.png"))
-                app.addImageData("pic", photo, fmt="PhotoImage")
-                app.addListBox("Hero", characters_names)
-                app.selectListItemAtPos("Hero", 0)
-                #Subwindow to add new Characters
-                app.startSubWindow("Add_Hero", modal=True, blocking=True)
-                app.addEntry("new_Hero")
-                app.addButton("Add", add_new_char)                
-                app.stopSubWindow()
-                # link the buttons to the function called press
-                app.addButtons(["Ok", "Hidden", "New"], press)
-        os.remove('temp.png')
+            new_entry.save("temp.png")
+            #Call GUI Here
+            db_gui.populate_db(dir_list, "temp.png")
+            os.remove('temp.png')
+            print(new_entry)
+
+        
+    
+    
     """
     else:
         #Message that nothing new was founded

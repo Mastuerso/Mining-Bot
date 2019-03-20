@@ -2,39 +2,38 @@
 from appJar import gui
 import os
 
-def getDirs(directory, enlist=False):    
-    #print(directory)
-    with os.scandir(directory) as contents:
-        dirs = []
-        dirls = []
-        for content in contents:
-            if not content.name.startswith('.') and os.path.isdir(content):
-                #if directory enter and audit
-                #print(content.name)
-                dirs.append(content)
-                dirls.append(content.name)
-            elif not content.name.startswith('.') and os.path.isfile(content):
-                print(content.name)
-        if enlist:
-            return dirs, dirls
-        else:
-            return dirs
+def list_all_dirs(directory):
+    dir_list = []
+    with os.scandir(directory) as dir_batch:
+        for single_dir in dir_batch:
+            if not single_dir.name.startswith('.') and os.path.isdir(single_dir):
+                dir_list.append(single_dir.name)
+    return(dir_list)
 
+dir_list = list_all_dirs("PVP Data/Heroes")
+app = gui("Db Collection")
+app.addListBox("Heroes", dir_list)
+app.go()
+    
+
+"""
 def press(button):
     if button == "Ok":
         selection = app.getListBox("Hero")
         #print("Adding " + selection[0] + " data")
         storage(directories, selection[0])
-    elif button == "Not Hero":        
-        storage(directories, "Not Hero")
+    elif button == "Hidden":        
+        storage(directories, "Hidden_Hero")
+    elif button == "New":
+        app.showSubWindow("Add_Hero")
     app.stop()
 
 def storage(parent, child):   
-    if child == "Not Hero":
+    if child == "Hidden_Hero":
         #print("Adding to Not Hero")
         parenDir = os.path.commonpath(parent)
         #print(parenDir)
-        noHero = os.path.join(parenDir, "Not Hero")
+        noHero = os.path.join(parenDir, "Hidden_Hero")
         #print(noHero)
         if not os.path.exists(noHero):
             #print("Dir doesn't exists")
@@ -46,7 +45,12 @@ def storage(parent, child):
                 #print(target)
                 thumbPath = target
     # storage image in the selected path
-    print(thumbPath)   
+    print(thumbPath)
+
+def add_new_char():
+    selection = app.getEntry("new_Hero")
+    print(selection)
+    app.stop()   
 
 # Take regional screenshots
 # Compare to database 
@@ -59,10 +63,17 @@ def storage(parent, child):
 directories, heroList = getDirs("PVP Data/Heroes", True)
 
 # Slection GUI
-with gui("Select Hero") as app:
-    app.addListBox("Hero", heroList)
-    # link the buttons to the function called press
-    app.addButtons(["Ok", "Not Hero", "Cancel"], press)
-
+#with gui("Select Hero") as app:
+app = gui("Hero Selection")
+app.addListBox("Hero", heroList)
+#Subwindow to add new Characters
+app.startSubWindow("Add_Hero", modal=True, blocking=True)
+app.addEntry("new_Hero")
+app.addButton("Add", add_new_char)                
+app.stopSubWindow()
+# link the buttons to the function called press
+app.addButtons(["Ok", "Hidden", "New"], press)
+app.go()
+"""
 
 
