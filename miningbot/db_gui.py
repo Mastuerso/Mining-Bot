@@ -1,31 +1,26 @@
 from appJar import gui
 from PIL import Image, ImageTk
+from miningbot import gather
+from shutil import copyfile
 import os
 
 def populate_db(dir_list ,temp_image):
-
-    #app = gui("Db")
-    #app.addListBox("Heroes", dir_list)
-    #app.go()
-
     
-    def storage(parent, child):   
-        if child == "Hidden":
-            #print("Adding Hidden Hero")
-            parenDir = os.path.commonpath(parent)
-            #print(parenDir)
-            hidden_hero = os.path.join(parenDir, "hidden_hero")
-            #print(noHero)
-            if not os.path.exists(hidden_hero):
-                #print("Dir doesn't exists")
-                os.makedirs(hidden_hero)
-            thumbPath = hidden_hero
-        else:
-            for target in parent:
-                if target.name == child:
-                    #print(target)
-                    thumbPath = target
-        # storage image in the selected path
+    def storage(parent, child):
+
+        parenDir = os.path.commonpath(parent)
+        #print(parenDir)
+        adding_hero = os.path.join(parenDir, child)
+        #print(noHero)
+        if not os.path.exists(adding_hero):
+            #print("Dir doesn't exists")
+            os.makedirs(adding_hero)
+        files_inside = gather.list_items(adding_hero, "f")
+        files_count = len(files_inside) + 1
+        file_name = child + "%(files_count)03d.png" % {"files_count" : files_count}
+        print("file name: " + file_name)
+        thumbPath = os.path.join(adding_hero, file_name)
+        copyfile(temp_image, thumbPath)        
         print(thumbPath)   
 
     def press(button):
@@ -35,20 +30,19 @@ def populate_db(dir_list ,temp_image):
             storage(dir_list, selection[0])
             app.stop()
         elif button == "Hidden":        
-            storage(dir_list, "Hidden")
+            storage(dir_list, "Hidden_Sign")
             print("Hidden")
             app.stop()
         elif button == "New":        
-            #new gui to ask Name of Character        
-            print("----------------New")
+            #new gui to ask Name of Character
             try:
                 app.showSubWindow(button)               
             except: 
-                print("wtf")
-                
+                print("wtf")                
 
     def add_new_char():
         selection = app.getEntry("new_Hero")
+        storage(dir_list, selection)
         print(selection)
         app.stop()
 
