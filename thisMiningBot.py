@@ -2,6 +2,7 @@ from miningbot import gather, db_gui
 from PIL import Image, ImageChops
 import pyautogui
 import os
+import time
 
 
 # Take regional screenshots
@@ -22,16 +23,22 @@ if len(thumbs) > 0:
         single_thumb.save(temp_name)
         for single_image in all_images:            
             file_path = os.path.normpath(single_image)
-            file_path = file_path.replace("\\", "/")
+            file_path = file_path.replace("\\", "/")            
+            
+            #This is the db comparison part
             db_img = Image.open(file_path)
             temp_img = Image.open(temp_name)
-            pixel_difference = ImageChops.difference(db_img, temp_img).getbbox() is None
-            if pixel_difference:
+            #pixel_difference = ImageChops.difference(db_img, temp_img).getbbox() is None
+            pixel_difference = gather.rmsdiff(db_img, temp_img)
+            #print(pixel_difference)
+            if pixel_difference < 0.1:
                 #print(pixel_difference)
                 print(single_image.name)
                 os.remove(temp_name)
                 found_count = found_count + 1
-                break                
+                break
+            
+            
             
         if os.path.isfile(temp_name):
             db_gui.populate_db(dir_list, temp_name)

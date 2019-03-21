@@ -1,6 +1,9 @@
 import pyautogui
 import os
 import sys
+from PIL import ImageChops
+import math
+import numpy as np
 
 def images(anchor, save = False):
     try:
@@ -111,6 +114,11 @@ def seek_all(directory, file_extension = "png"):
                 #print(single_decompress)
                 decompress_res.append(single_decompress)
     return decompress_res
+
+def rmsdiff(im1, im2):
+    """Calculates the root mean square error (RSME) between two images"""
+    errors = np.asarray(ImageChops.difference(im1, im2)) / 255
+    return math.sqrt(np.mean(np.square(errors)))
     
 
                 
