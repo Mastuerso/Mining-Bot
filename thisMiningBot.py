@@ -36,15 +36,13 @@ if len(thumbs) > 0:
                 print(single_image.name)
                 os.remove(temp_name)
                 found_count = found_count + 1
-                break
-            
-            
+                break      
             
         if os.path.isfile(temp_name):
             db_gui.populate_db(dir_list, temp_name)
-        #os.remove(temp_name)
+        #os.remove(temp_name)   
     
-    
+    #This is actually where the bot is working
     # Ban charaters
     # Play PVP
 

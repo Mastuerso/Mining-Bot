@@ -1,32 +1,34 @@
 import pyautogui
 import os
+from miningbot import gather
 
-#Locate on Screen
-#print(os.getcwd())
-#print(os.listdir())
+go_flag = False
+try:
+    pyautogui.click('NoxLogo.PNG')
+    go_flag = True
+except:
+    print("Emulator not on Screen")
 
-pyautogui.click('NoxLogo.PNG')
-count = 0
+if go_flag:
 
-with os.scandir('PVP Data/Heroes') as heroes:
-    for heroDir in heroes:
-        #print(heroDir.name)
-        if not heroDir.name.startswith('.'):
-            heroFullDir = 'PVP Data/Heroes/' + heroDir.name
-            print(heroDir.name)
-            currentHero = heroDir.name        
-            with os.scandir(heroFullDir) as heroImgs:            
-                for heroImg in heroImgs:
-                    print(heroImg.name)
-                    currentHDir = 'PVP Data/Heroes/' + heroDir.name + "/" + heroImg.name
-                    try:
-                        #print(pyautogui.locateOnScreen(currentHDir, confidence=0.6, grayscale=True))
-                        heroLocation = pyautogui.locateOnScreen(currentHDir, grayscale=False)
-                        heroPoint = pyautogui.center(heroLocation)
-                        pyautogui.moveTo(heroPoint.x, heroPoint.y)
-                        count = count + 1
-                    except:
-                        #print("Item not Found")
-                        errCount = 1
-print("Detected: %(count)01d" % {"count": count})
+    base_dir_path = "PVP Data/Heroes"    
+    all_images = gather.seek_all(base_dir_path)
+    count = 0
+
+    for single_image in all_images:
+        file_path = os.path.normpath(single_image)
+        file_path = file_path.replace("\\", "/")
+        #print(file_path)
+        try:
+            #print(pyautogui.locateOnScreen(currentHDir, confidence=0.6, grayscale=True))
+            heroLocation = pyautogui.locateOnScreen(file_path, grayscale=True, confidence=0.9)
+            print(single_image.name)
+            heroPoint = pyautogui.center(heroLocation)
+            pyautogui.moveTo(heroPoint.x, heroPoint.y)
+            count = count + 1
+        except:
+            #print("Item not Found")
+            errCount = 1
+    
+    print("Detected: %(count)01d" % {"count": count})
 

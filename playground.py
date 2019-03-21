@@ -3,7 +3,8 @@ import keyboard
 import time
 from PIL import Image
 import numpy
-from miningbot import gather, db_gui
+from miningbot import gather, db_gui, battle_bot
+import os
 
 #time.sleep(5) # 5 Seconds pause
 #mouseX, mouseY = pyautogui.position()
@@ -100,5 +101,20 @@ cheeseshop("Limburger", "It's very runny, sir.",
 #im.save("test.png")
 
 
-dir_list = gather.list_items("PVP Data/Heroes")
-db_gui.populate_db(dir_list, "temp.png")
+#dir_list = gather.list_items("PVP Data/Heroes")
+#db_gui.populate_db(dir_list, "temp.png")
+
+"""with open("ban.list") as f:
+  #print(f.read())
+  for line in f:
+    print(line, end = '')"""
+
+go_flag = False
+try:
+    pyautogui.click('NoxLogo.PNG')
+    go_flag = True
+except:
+    print("Emulator not on Screen")
+
+if go_flag:  
+  battle_bot.ban()
