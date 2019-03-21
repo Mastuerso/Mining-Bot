@@ -84,7 +84,7 @@ def list_items(directory, *arguments):
         with os.scandir(directory) as items:
             for item in items:
                 if not item.name.startswith('.'):                    
-                    if os.path.isdir(item) and list_dirs:
+                    if os.path.isdir(item):
                         dir_list.append(item)
                         if verbose:
                             print(item)
@@ -99,3 +99,18 @@ def list_items(directory, *arguments):
     else:
         print("Invalid directory")
     return result_list
+
+def seek_all(directory, file_extension = "png"):
+    raw_results = list_items(directory)
+    decompress_res = []
+    for single_raw_res in raw_results:
+        #print (single_raw_res.name)
+        compress_res = list_items(single_raw_res, "f")
+        if len(compress_res) > 0:
+            for single_decompress in compress_res:
+                #print(single_decompress)
+                decompress_res.append(single_decompress)
+    return decompress_res
+    
+
+                
